@@ -93,7 +93,7 @@ public class ProductDao {
             ps.setInt(2, price);
             ps.setInt(3, id);
 
-            ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

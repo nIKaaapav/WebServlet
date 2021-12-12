@@ -19,8 +19,7 @@
 <body>
 
 <div class="container">
-    <a href="/products" class="badge-secondary">All products</a>
-    <a href="/products/add" class="badge-primary">Add product</a>
+    <a href="/products/add" style="margin-bottom: 30px;" class="btn btn-outline-primary">Add product</a>
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -41,11 +40,11 @@
                 <td>${row.price}</td>
                 <td>
                     <form method="POST" action="/products">
-                        <button type="submit" name="delete" value="${row.id}">delete</button>
+                        <button type="submit" class="btn btn-outline-danger" name="delete" value="${row.id}">delete</button>
                     </form>
                 </td>
                 <td>
-                    <a href="/products/add/${row.id}" class="badge-secondary">Edit product</a>
+                    <a href="/products/add/${row.id}" class="btn btn-outline-primary">Edit product</a>
                 </td>
             </tr>
         </#list>

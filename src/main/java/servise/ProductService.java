@@ -4,7 +4,6 @@ import dao.ProductDao;
 import entyty.Product;
 
 import java.sql.Connection;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

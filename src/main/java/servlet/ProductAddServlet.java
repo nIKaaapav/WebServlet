@@ -1,7 +1,9 @@
 package servlet;
 
 import entyty.Product;
+import helpers.RedirectHelper;
 import servise.ProductService;
+import servise.SecurityService;
 import templete.TemplateEngine;
 
 import javax.servlet.ServletException;
@@ -17,20 +19,26 @@ import java.util.Optional;
 public class ProductAddServlet extends HttpServlet {
     private final TemplateEngine te = TemplateEngine.folder();
     final Connection connection;
-    final ProductService service;
+    final ProductService productService;
+    final SecurityService securityService;
 
-    public ProductAddServlet(Connection conn) {
+    public ProductAddServlet(Connection conn, SecurityService security) {
         connection = conn;
-        service = new ProductService(conn);
+        securityService = security;
+        productService = new ProductService(conn);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String token = RedirectHelper.checkIsExistTokenInCookie(req, resp);
+
+        RedirectHelper.redirectToLoginIfTokenExistInDB(!securityService.isUserHaveToken(token), resp);
+
         Map<String, Object> data = new HashMap<>();
         Optional<Integer> idProduct = getPath(req);
 
         if (idProduct.isPresent()){
-            Optional<Product> oneProduct = service.getOneProduct(idProduct.get());
+            Optional<Product> oneProduct = productService.getOneProduct(idProduct.get());
             if (oneProduct.isPresent()){
                 Product product = oneProduct.get();
 
@@ -45,17 +53,22 @@ public class ProductAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String token = RedirectHelper.checkIsExistTokenInCookie(req, resp);
+
+        RedirectHelper.redirectToLoginIfTokenExistInDB(!securityService.isUserHaveToken(token), resp);
+
         String name = req.getParameter("name");
         String price = req.getParameter("price");
         Integer priceInteger = parseInt(price).get();
         Optional<Integer> idProduct = getPath(req);
+
         if (idProduct.isPresent()){
             Integer id = idProduct.get();
-            service.updateProduct(id, name, priceInteger);
+            productService.updateProduct(id, name, priceInteger);
 
             resp.sendRedirect("/products");
         } else {
-            service.postProduct(name, priceInteger);
+            productService.postProduct(name, priceInteger);
             resp.sendRedirect("/products/add");
         }
     }
