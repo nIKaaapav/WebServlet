@@ -1,12 +1,9 @@
-package mappers;
+package dao.mappers;
 
-import entyty.Product;
 import entyty.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class UserMapper {
     public static User mapRows(ResultSet resultSet) throws SQLException {

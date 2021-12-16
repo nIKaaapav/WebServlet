@@ -1,7 +1,9 @@
 package servlet;
 
 import entyty.Product;
+import helpers.Path;
 import helpers.RedirectHelper;
+import helpers.StringToInt;
 import servise.ProductService;
 import servise.SecurityService;
 import templete.TemplateEngine;
@@ -30,12 +32,8 @@ public class ProductAddServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String token = RedirectHelper.checkIsExistTokenInCookie(req, resp);
-
-        RedirectHelper.redirectToLoginIfTokenExistInDB(!securityService.isUserHaveToken(token), resp);
-
         Map<String, Object> data = new HashMap<>();
-        Optional<Integer> idProduct = getPath(req);
+        Optional<Integer> idProduct = Path.getPath(req);
 
         if (idProduct.isPresent()){
             Optional<Product> oneProduct = productService.getOneProduct(idProduct.get());
@@ -53,14 +51,10 @@ public class ProductAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String token = RedirectHelper.checkIsExistTokenInCookie(req, resp);
-
-        RedirectHelper.redirectToLoginIfTokenExistInDB(!securityService.isUserHaveToken(token), resp);
-
         String name = req.getParameter("name");
         String price = req.getParameter("price");
-        Integer priceInteger = parseInt(price).get();
-        Optional<Integer> idProduct = getPath(req);
+        Integer priceInteger = StringToInt.parseInt(price).get();
+        Optional<Integer> idProduct = Path.getPath(req);
 
         if (idProduct.isPresent()){
             Integer id = idProduct.get();
@@ -70,35 +64,6 @@ public class ProductAddServlet extends HttpServlet {
         } else {
             productService.postProduct(name, priceInteger);
             resp.sendRedirect("/products/add");
-        }
-    }
-
-    private static int toInt (String s){
-        return Integer.parseInt(s);
-    }
-
-    private static Optional<Integer> parseInt(String s){
-        try{
-            int value = toInt(s);
-            return Optional.of(value);
-        } catch (NumberFormatException x){
-            return  Optional.empty();
-        }
-    }
-
-    private static Optional<Integer> getPath(HttpServletRequest rq) {
-        String path = rq.getPathInfo();
-        try {
-            if (path.charAt(0) == '/') {
-                path = path.substring(1);
-            }
-            if (parseInt(path).isPresent()) {
-                return Optional.of(parseInt(path).get());
-            } else {
-                return Optional.empty();
-            }
-        } catch (NullPointerException e){
-            return Optional.empty();
         }
     }
 }

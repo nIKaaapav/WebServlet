@@ -1,7 +1,7 @@
 package dao;
 
 import entyty.User;
-import mappers.UserMapper;
+import dao.mappers.UserMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

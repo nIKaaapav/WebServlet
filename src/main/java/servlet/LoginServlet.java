@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class LoginServlet extends HttpServlet {
     private final TemplateEngine te = TemplateEngine.folder();
@@ -32,13 +31,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        Cookie[] cookies = req.getCookies();
-
-        Optional<String> tokenFromCookie = CookiesHelper.getTokenFromCookie(cookies);
-
-        if (tokenFromCookie.isPresent() && securityService.isUserHaveToken(tokenFromCookie.get())){
-            resp.sendRedirect("/products");
-        }
 
         te.render("/login.ftl", data, resp);
     }
