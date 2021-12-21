@@ -1,16 +1,16 @@
 package servise;
 
-import dao.JdbsUserDao;
+import dao.JDBCUserDao;
 import entyty.User;
 
 import java.sql.Connection;
 import java.util.Optional;
 
 public class UserService {
-    private final JdbsUserDao loginDaoSQL;
+    private final JDBCUserDao loginDaoSQL;
 
     public UserService(Connection connection) {
-        this.loginDaoSQL = new JdbsUserDao(connection);
+        this.loginDaoSQL = new JDBCUserDao(connection);
     }
 
     public boolean getUserByEmail(String email, String password){

@@ -21,7 +21,7 @@ public class WebServer {
         handler.addServlet(new ServletHolder(new ProductAddServlet(connection, securityService)), "/products/add/*");
         handler.addServlet(new ServletHolder(new ProductServlet(connection, securityService)), "/products");
         handler.addServlet(new ServletHolder(new LoginServlet(connection, securityService)), "/login");
-        handler.addServlet(new ServletHolder(new RegisterServlet(connection, securityService)), "/register");
+        handler.addServlet(new ServletHolder(new RegistrationServlet(connection, securityService)), "/register");
 
         handler.addFilter(new FilterHolder(new CookieFilter(securityService)), "/*", EnumSet.of(DispatcherType.REQUEST));
 

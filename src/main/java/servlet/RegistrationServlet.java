@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class RegisterServlet extends HttpServlet {
+public class RegistrationServlet extends HttpServlet {
     private final TemplateEngine te = TemplateEngine.folder();
     final Connection connection;
     final UserService userService;
     final SecurityService securityService;
 
-    public RegisterServlet(Connection conn, SecurityService security) {
+    public RegistrationServlet(Connection conn, SecurityService security) {
         connection = conn;
         securityService = security;
 
@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Map<String, Object> data = new HashMap<>();
 
-        te.render("/register.ftl", data, resp);
+        te.render("/registration.ftl", data, resp);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("/products");
         } else {
             Map<String, Object> data = new HashMap<>();
-            data.put("errorMessage", "Email is exist!");
-            te.render("/register.ftl", data, resp);
+            data.put("errorMessage", "Email does not exist!");
+            te.render("/registration.ftl", data, resp);
         }
     }
 }

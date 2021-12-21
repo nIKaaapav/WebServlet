@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class JdbsProductDao implements ProductDao<Product>{
+public class JDBCProductDao implements ProductDao<Product>{
     private final Connection connection;
 
     private static String selectAll = "select * from products";
@@ -18,7 +18,7 @@ public class JdbsProductDao implements ProductDao<Product>{
     private static String selectOne = "select * from public.products where id = ?";
     private static String update = "update public.products set name = ?, price = ?, \"creationDate\" = DEFAULT where id = ?";
 
-    public JdbsProductDao(Connection connection) {
+    public JDBCProductDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -49,8 +49,8 @@ public class JdbsProductDao implements ProductDao<Product>{
             }
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
        arrayProducts.forEach(x -> x.toString());
         return arrayProducts;

@@ -9,13 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class JdbsUserDao implements UserDao<User>{
+public class JDBCUserDao implements UserDao<User>{
     private final Connection connection;
     private static String selectByEmailPassword = "select * from public.users  where email = ? and password = ?";
     private static String set = "INSERT INTO public.users (password, email, name) VALUES (?, ?, ?)";
 
 
-    public JdbsUserDao(Connection connection) {
+    public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 

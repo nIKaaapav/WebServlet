@@ -22,7 +22,7 @@
   <div style="width: 100%;">
     <a href="/login"  style="margin-bottom: 30px;" class="btn btn-outline-primary">To login</a>
   </div>
-    <form method="post" action="/register">
+    <form method="post" action="/registration">
         <div class="mb-3">
             <label for="exampleInputName1" class="form-label">Name</label>
             <input type="text" name="name" class="form-control" id="exampleInputName1" aria-describedby="emailHelp">

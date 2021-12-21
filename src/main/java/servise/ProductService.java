@@ -1,6 +1,6 @@
 package servise;
 
-import dao.JdbsProductDao;
+import dao.JDBCProductDao;
 import entyty.Product;
 
 import java.sql.Connection;
@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductService {
-    private final JdbsProductDao productDAOSQL;
+    private final JDBCProductDao productDAOSQL;
 
     public ProductService(Connection connection) {
-        this.productDAOSQL = new JdbsProductDao(connection);
+        this.productDAOSQL = new JDBCProductDao(connection);
     }
 
     public List<Product> getProducts(){
